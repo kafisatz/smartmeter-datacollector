@@ -23,4 +23,4 @@ class LoggerSink(DataSink):
         pass
 
     async def send(self, data_point: MeterDataPoint) -> None:
-        self._logger.info(str(data_point))
+        self._logger.debug(str(data_point))

@@ -53,7 +53,10 @@ setup(
         "asyncio-mqtt==0.10.0",
         "gurux-dlms==1.0.107",
         "paho-mqtt==1.5.1",
-        "pyserial==3.5",
+        "pyserial==3.5",        
+        "influxdb-client==1.34.0",
+        "aiohttp",
+        "aiocsv"
     ],
     scripts=["bin/smartmeter-datacollector"],
     zip_safe=True,

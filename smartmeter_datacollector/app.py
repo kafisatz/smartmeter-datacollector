@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
 # See LICENSES/README.md for more information.
 #
+import os 
 import argparse
 import asyncio
 import logging
@@ -15,12 +16,14 @@ from . import config, factory
 
 logging.basicConfig(level=logging.WARNING)
 
+LOGGER = logging.getLogger("sink")
 
-async def build_and_start(app_config: ConfigParser):
+INFLUXDB_CONFIG_FILE = "/home/pi/.influxdb_config"
+
+async def build_and_start(app_config: ConfigParser):    
     readers = factory.build_meters(app_config)
     sinks = factory.build_sinks(app_config)
     data_collector = factory.build_collector(readers, sinks)
-
     await asyncio.gather(*[sink.start() for sink in sinks])
 
     try:
@@ -56,7 +59,6 @@ def parse_arguments():
         '-d', '--dev', help="Development mode", action='store_true')
     return parser.parse_args()
 
-
 def main():
     args = parse_arguments()
     debug_mode = bool(args.dev)
@@ -64,6 +66,11 @@ def main():
         config.write_default_config(args.config)
         logging.warning("Default configuration written to file '%s'.", args.config)
         return
+    logging.info("args.config is : %s", args.config)
+    LOGGER.info("args.config is : %s", args.config)
+    LOGGER.info(args.config)
+    LOGGER.info("args.config")
+    
     app_config = config.read_config_files(args.config)
     set_logging_levels(app_config)
     asyncio.run(build_and_start(app_config), debug=debug_mode)

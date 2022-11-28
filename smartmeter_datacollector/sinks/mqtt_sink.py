@@ -22,7 +22,6 @@ from .data_sink import DataSink
 
 LOGGER = logging.getLogger("sink")
 
-
 # pylint: disable=too-many-instance-attributes
 @dataclass
 class MqttConfig:
@@ -168,6 +167,7 @@ class MqttDataSink(DataSink):
     @staticmethod
     def data_point_to_mqtt_json(data_point: MeterDataPoint) -> str:
         return json.dumps({
-            "value": data_point.value,
+            #BK: all data seems to be parsed from Int32 or similar -> send data as integer to MQTT
+            "value": int(data_point.value),
             "timestamp": int(data_point.timestamp.timestamp())
         })
