@@ -187,7 +187,7 @@ class InfluxdbDataSink(DataSink):
             results = self.client.buckets_api().find_buckets()
             #print(results)
             #print(type(results)) #<class 'influxdb_client.domain.buckets.Buckets'>
-            LOGGER.info("InfluxDB - Length of buckets result: ",len(results.to_str())) #should be larger 0
+            #LOGGER.info("InfluxDB - Length of buckets result: ",len(results.to_str())) #should be larger 0
             LOGGER.info("InfluxDB - Connected to InfluxDB.")            
         except Exception as ex:
             LOGGER.error(ex)
